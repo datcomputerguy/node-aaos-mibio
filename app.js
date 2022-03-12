@@ -19,7 +19,7 @@ let numUsers = 0;
 
 io.on('connection', (socket) => {
   let addedUser = false;
-
+ 
   // when the client emits 'new message', this listens and executes
   socket.on('new message', (data) => {
     // we tell the client to execute 'new message'
@@ -29,7 +29,17 @@ io.on('connection', (socket) => {
     });
   });
 
-  // when the client emits 'add user', this listens and executes
+
+  // when the client emits 'new message', this listens and executes
+  socket.on('chat message', (data) => {
+    // we tell the client to execute 'new message'
+    socket.broadcast.emit('chat message', {
+      username: socket.username,
+      message: data
+    });
+  });
+
+ // when the client emits 'add user', this listens and executes
   socket.on('add user', (username) => {
     if (addedUser) return;
 
